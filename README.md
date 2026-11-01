@@ -14,6 +14,12 @@ subscription-platform/
 └── README.md          You are here
 ```
 
+## Output:
+<img width="1917" height="986" alt="Screenshot 2026-11-01 114019" src="https://github.com/user-attachments/assets/00a18f2b-63c4-46ac-8b37-848c4e9a37fe" />
+
+
+---
+
 ## Quick start (local, without Docker)
 
 **Requirements:** Node.js 18+, MongoDB running locally (or an Atlas connection string).
