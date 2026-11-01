@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+
+/* Headings use a visibly different typeface (Space Grotesk) from body copy
+   (Inter) - a deliberate, "outstanding" contrast rather than just a bolder
+   weight of the same font, with wider letter-spacing on the smallest
+   eyebrow-style labels for a bit of editorial polish. */
+h1, h2, h3, h4, .font-display {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h1, .text-display-lg {
+  letter-spacing: -0.03em;
+}
+
+.eyebrow {
+  @apply text-[11px] font-bold uppercase tracking-widest text-slate-400;
+}
+
+/* Numbers in stat cards, tables and money amounts line up and don't jitter
+   between different digit widths - a small but very "enterprise SaaS" detail. */
+.font-display, table, .tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: rgba(61, 92, 255, 0.2);
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 999px;
+}
+
+/* A visible, on-brand focus ring for keyboard navigation - every interactive
+   element gets this instead of the browser's inconsistent default outline. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid theme('colors.brand.400');
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-500 via-brand-600 to-accent-500 bg-clip-text text-transparent;
+  }
+  .text-subtle {
+    @apply text-slate-500 dark:text-slate-400;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-ink-900 border border-slate-200 dark:border-white/10 rounded-xl3 shadow-soft;
+  }
+  /* Translucent, blurred "glass" card for the public-facing hero/auth pages -
+     dark navy + a soft blue glow border, matching the reference design.
+     Falls back to a plain light card in light mode so nothing looks broken
+     with the lights on. */
+  .glass-card {
+    @apply rounded-xl3 border transition;
+    @apply bg-white border-slate-200 shadow-soft;
+  }
+  .dark .glass-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 20px 60px rgba(0,0,0,0.45);
+  }
+  .glass-card-highlight {
+    @apply border-brand-300 dark:border-transparent;
+  }
+  .dark .glass-card-highlight {
+    background: linear-gradient(180deg, rgba(40,99,240,0.35), rgba(28,78,216,0.15));
+    box-shadow: 0 0 0 1px rgba(85,134,255,0.4), 0 20px 60px rgba(40,99,240,0.35);
+  }
+  /* Rounded pill button - the "Signup" / "Buy Now" style from the reference. */
+  .btn-pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-pill-primary {
+    @apply btn-pill bg-brand-500 text-white hover:bg-brand-600 shadow-glow;
+  }
+  .btn-pill-light {
+    @apply btn-pill bg-white text-ink-950 hover:bg-slate-100;
+  }
+  /* Pill-shaped segmented tab bar, like the reference screenshots' top tab rows. */
+  .tab-pill-track {
+    @apply inline-flex items-center gap-1 rounded-2xl bg-slate-100 dark:bg-slate-800/60 p-1;
+  }
+  .tab-pill {
+    @apply rounded-xl px-4 py-2 text-sm font-semibold transition whitespace-nowrap;
+  }
+  .tab-pill-active {
+    @apply bg-brand-600 text-white shadow-card;
+  }
+  .tab-pill-inactive {
+    @apply text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200;
+  }
+  /* Soft pastel icon circle used in mini info cards (limits, plan features, etc). */
+  .icon-circle {
+    @apply flex h-10 w-10 items-center justify-center rounded-full shrink-0;
+  }
+  .page-title {
+    @apply font-display text-2xl font-bold tracking-tight;
+  }
+  .page-subtitle {
+    @apply text-subtle mt-1;
+  }
+  .section-title {
+    @apply font-display font-bold text-base;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-brand-600 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-[0.98];
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-rose-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-600 active:scale-[0.98];
+  }
+  .input {
+    @apply w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-600 dark:text-slate-300;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+}
